@@ -24,4 +24,13 @@ console.log(globaName);
 // - securify [보안]
 // -thread safety
 // -reduce human mistakes
-l
+
+//4.variable types
+//primitive, sigile item : number, string, boolean, null, underfiden, symbol
+//object, box container
+//function, first-class function
+
+const count = 17; //integer- 정수
+const size = 17.1; //decimal number - 소수점
+console.log(`value: ${count}, type: ${typeof count}`);
+console.log(`value: ${size}, type: ${typeof size}`);
