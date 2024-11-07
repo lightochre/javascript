@@ -30,3 +30,68 @@ function foo1(){
     console.log(x);
 }
 foo1();
+
+//13.2.1 전연과 전역 스코프
+//예제
+var x = 'global x';
+var y = 'global y';
+
+function outer() {
+    var z ="outer's local z";
+
+    console.log(x); //1
+    console.log(y);//2
+    console.log(z);//3
+
+    function inner() {
+        var x ="inner's local x";
+
+        console.log(x); //4
+        console.log(y); //5
+        console.log(z); //6
+    }
+    inner();
+
+}
+outer();
+
+console.log(x); //7
+// console.log(z); //REferenceError
+
+//13.3 스코프 체인
+//13.3.2 스코프 체인에 의한 함수 검색
+//예제
+//전역함수
+function foo(){
+    console.log('global function foo');
+}
+
+//중첩함수
+function bar(){
+    function foo(){
+        console.log('local function foooo');
+    }
+    foo(); //local function foo
+}
+bar();
+
+// 13.4 함수레벨 스코프
+// var 키워드로 선언된 변수는 오로지 함수 코드 블록만을 지역스코프로 인정
+
+//13.5 렉시컬 스코프
+//렉시컬 스코프 또는 정적 스코프
+//함수 정의가 평가되는 시점에 상위 스코프가 정적으로 결정되기 때문에 정적스코프라고 부른다.
+//예제
+var x = 1;
+
+function foo(){
+    var x = 10;
+    bar();
+}
+
+function bar(){
+    console.log(x);
+}
+foo();//1
+bar(); //1
+
