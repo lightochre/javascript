@@ -61,3 +61,35 @@ console.log(circle2.getArea()); //3.141592653589793
 console.log(circle3.getArea()); //12.566370614359172
 
 //19.3 프로토타입 객체
+//프로토타입은 자신의 constructor 프로퍼티를 통해서 생성자함수에 접근할 수 있고, 생산자 함수는 자신의 prototype 프로퍼티를 통해 프로토타입에 접근 할 수 있다.
+
+//1.prototype 객체는 생성자 함수에 자동으로 생성되는 객체
+//예제19.3
+function Person(name) {
+  this.name = name;
+}
+//persone.prototype 은 prototype 객체
+console.log(Person.prototype);
+
+//2.prototype 객체의 주요 특징
+//예제 19.4
+function Animal(name) {
+  this.name = name;
+}
+
+//prototype 객체에 메서드 추가
+Animal.prototype.speak = function () {
+  console.log(`${this.name}이 소리를 냅니다.`);
+};
+
+//prototype 객체의 속성 추가
+Animal.prototype.type = "동물";
+
+let dog = new Animal("멍멍이");
+let cat = new Animal("야옹이");
+
+console.log(dog.type);
+console.log(cat.type);
+dog.speak();
+
+//19.3.2 함수객체의 prototype 프로퍼티
