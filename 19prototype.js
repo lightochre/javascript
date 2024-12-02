@@ -93,3 +93,55 @@ console.log(cat.type);
 dog.speak();
 
 //19.3.2 함수객체의 prototype 프로퍼티
+//함수 객체만이 소유하는 prototype 프로퍼티는 생성자 함수가 생성할 인스터스의 프로토타입을을 가리킨다.
+
+//1. 모든 함수 객체는  prototype 속성을 가지며, prototype는 객체입니다.
+//예제
+function Person(name) {
+  this.name = name;
+}
+
+console.log(Person.prototype); //{constructor}
+console.log(typeof person.prototype); //undefined
+
+//2.constructor 속성 prototype 객체는 기본적으로 constructor 속성을 포함하며 원래 함수를 가르킵니다.
+
+//19.3.3 프로토타입의 constructor 의 프로퍼티와 생성자함수
+//constructor 프로퍼티는 prototype 프로퍼티로 자신을 참조하고 있는 생성자함수를 가르킨다.
+//연결은 생성자함수가 생성될 때, 즉 함수 객체가 생성될깨 이뤄진다.
+
+//예제
+
+//생성자 함수
+function Person(name) {
+  this.name = name;
+}
+
+const me = new Person("lee");
+
+//me 객체의 생성자함수는 person 이다
+console.log(me.constructor === Person); //true
+
+//19.4 리처럴 표기법에 의해 생성된 객체의 생성자 함수와 프로토타입
+//예제
+//obj 객체를 생성한 생성자 함수는 Object 이다.
+const obj = new Object();
+console.log(obj.constructor === Object); //true
+
+//add 함수 객체를 생성한 생성자 함수는 Function 이다.
+const add = new Function(`a`, `b`, `return a + b`);
+console.log(add.constructor === Function);
+
+//생성자 함수
+function Person1(name) {
+  this.name = name;
+}
+//me 객체를 생성한 생성자함수는 Person 이다.
+const me1 = new Person1(`lee`);
+console.log(me1.constructor === Person1);
+
+//19.5 프로토타입의 생성 시점
+// 프로토타입은 생성자 함수가 생성되는 시점에 더불어 생성
+//프로토타입과 생성자 함수는 단독으로 존재할 수 없고 언제나 쌍으로 존재
+
+//19.5.1 사용자정의 생성자함수와 프로토타입 생성 시점
