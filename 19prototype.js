@@ -145,3 +145,66 @@ console.log(me1.constructor === Person1);
 //프로토타입과 생성자 함수는 단독으로 존재할 수 없고 언제나 쌍으로 존재
 
 //19.5.1 사용자정의 생성자함수와 프로토타입 생성 시점
+
+//19.6.3 생성자 함수에 의해 생성된 객체의 프로토타입
+//new 연산자와 함께 생성자 함수를 호출하면 인스턴스를 생성하면 다른 객체 생성 방식과 마찬가지로 추상연산자 OrdinaryObject가 호출된다.
+//프로토타입은 객체다.
+//일반객채와 같이 프로토타입에도 프로퍼티를 추가/삭제 할 수 있다.
+
+//예제
+function Person(name) {
+  this.name = name;
+}
+
+//프로토다입에도 프로퍼티를 추가/삭제 할 수 있음
+//프로토타입 메서드
+Person.prototype.sayHello = function () {
+  console.log(`Hi My name is ${this.name}`);
+};
+
+const me2 = new Person("lee");
+const you = new Person("Kim");
+
+me2.sayHello();
+you.sayHello();
+
+console.log(me2.hasOwnProperty("name")); //true
+me2.hasOwnProperty("name");
+
+//19.7 프로토타입 체인
+
+//예제
+//me 객체의 프로토타입은 Person.prototype 이다.
+Object.getPrototypeOf(me2) === Person.prototype; //true
+
+//Person.prototype 의 프로토타입은 Object.prototype 이다.
+//프로토타입의 프로토타입은 언제나  Object.prototype 이다.
+Object.getPrototypeOf(Person.prototype) === Object.prototype;
+
+//19.8 오버라이딩과 프로퍼티 섀도잉
+
+//예제
+const Person2 = (function () {
+  //생성자함수
+  function Person2(name) {
+    this.name = name;
+  }
+
+  //프로트타입 메서드
+  Person2.prototype.sayHello1 = function () {
+    console.log(`Hi My name is ${"this.name"}`);
+  };
+
+  //생성자함수 반환
+  return Person2;
+})();
+
+const me3 = new Person2("KIM");
+
+//인스턴스 메서드
+me3.sayHello1 = function () {
+  console.log(`Hey! My name is ${this.name}`);
+};
+
+//인스턴스 메서드가 호출된다. 프로토타입 메서드는 인스턴스 메서드에 의해 가려진다.
+me3.sayHello1();
