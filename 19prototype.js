@@ -182,6 +182,9 @@ Object.getPrototypeOf(me2) === Person.prototype; //true
 Object.getPrototypeOf(Person.prototype) === Object.prototype;
 
 //19.8 오버라이딩과 프로퍼티 섀도잉
+//19.10 instanceof 연산자
+//instranceof 연산자는 이항연산자로서 좌변에 객체를 가리키는 식별자, 우변에 생성자함수를 가르키는 식별자를 피연산자로 받는다.
+//우변의 생성자함수의 prototype에 바인딩된 객체가 좌변의 객체의 프로토타입 체인 상에 존재하면 true로 평가, 아니면 false로 평가된다.
 
 //예제
 const Person2 = (function () {
@@ -195,11 +198,32 @@ const Person2 = (function () {
     console.log(`Hi My name is ${"this.name"}`);
   };
 
-  //생성자함수 반환
+  //1. 생성자함수의 prototype 프로퍼티를 통해 프로토타입을 교체
+  //1에서 Person.prototyp에 객체 리터럴을 할당했다. 교체함
+  //교체한 객체 리터럴은 constructor 프로퍼티가 없음.
+  Person2.prototype = {
+    //constructor 프로퍼티와 생성자 함수간의 연결을 설정
+    constructor: Person2,
+    sayHello1() {
+      console.log(`HI MY name is ${this.name}`);
+    },
+  };
+
+  //생성자함수 반환/
   return Person2;
 })();
 
-const me3 = new Person2("KIM");
+const me3 = new Person2("LEE");
+
+//프로토타입으로 교체할 객체
+const parent = {};
+
+//프로토타입의 교체
+Object.setPrototypeOf(me, parent);
+
+//Person3 생성자함 함수dhk parent 객체는 연결되어 있지 않다.
+console.log(Person2.prototype === parent); //false
+console.log(parent.constructor === Person2); //false
 
 //인스턴스 메서드
 me3.sayHello1 = function () {
@@ -208,3 +232,15 @@ me3.sayHello1 = function () {
 
 //인스턴스 메서드가 호출된다. 프로토타입 메서드는 인스턴스 메서드에 의해 가려진다.
 me3.sayHello1();
+
+//constructor 프로퍼티가 생성자 함수를 가르킨다.
+console.log(me3.constructor === Person2); //true
+console.log(me3.constructor === Object); //false
+
+//Person2.prototpe이 me3 객체의 프로토타입 체인 상에 존재하므로 true로 평가된다.
+console.log(me3 instanceof Person2); //true
+
+//Object.prototype이 me 객체의 프로토타입 체인 상에 존재하므로 true로 평가된다.
+console.log(me3 instanceof Object); //true
+
+//19.11 직접상속
